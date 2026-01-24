@@ -12,7 +12,9 @@ const Header = () => {
   return (
     <header>
       <div className="flex justify-between gap-10 container mx-auto py-7 items-center">
-        <Image src="/images/logo.svg" alt="Logo" width={127} height={30} />
+        <Link href="/">
+            <Image src="/images/logo.svg" alt="Logo" width={127} height={30} />
+        </Link>
         <nav className="flex gap-44 font-medium">
           <Link
             href="#"
