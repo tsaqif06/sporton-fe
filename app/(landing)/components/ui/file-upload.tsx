@@ -43,7 +43,7 @@ const FileUpload = ({ onFileSelect }: TFileUploadProps) => {
       />
       {!file ? (
         <div className="text-center my-5">
-          <FiUploadCloud className="text-primary mx-auto mb-4" size={28} />
+          <FiUploadCloud className="text-primary mx-auto mb-2" size={28} />
           <p className="text-xs">Upload Your Payment Receipt here</p>
         </div>
       ) : (
