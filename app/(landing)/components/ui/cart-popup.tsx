@@ -28,6 +28,13 @@ export const cartList = [
     qty: 5,
     imgUrl: "product-3.png",
   },
+  {
+    name: "SportsOn Product 4",
+    category: "Running",
+    price: 30000,
+    qty: 2,
+    imgUrl: "product-3.png",
+  },
 ];
 
 const CartPopup = () => {
@@ -35,7 +42,7 @@ const CartPopup = () => {
 
   const totalPrice = cartList.reduce(
     (total, item) => total + item.price * item.qty,
-    0
+    0,
   );
 
   const handleCheckout = () => {
