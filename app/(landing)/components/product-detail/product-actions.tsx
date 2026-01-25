@@ -9,14 +9,23 @@ import {
 import Button from "../ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/app/hooks/use-cart-store";
+import { Product } from "@/app/types";
 
 type TProductActionsProps = {
-  stock: number
-}
+  product: Product;
+  stock: number;
+};
 
-const ProductActions = ({stock}: TProductActionsProps) => {
+const ProductActions = ({ product, stock }: TProductActionsProps) => {
   const { push } = useRouter();
   const [qty, setQty] = useState(1);
+
+  const { addItem } = useCartStore();
+
+  const handleAddToCart = () => {
+    addItem(product, qty);
+  };
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 lg:gap-5 w-full">
@@ -41,7 +50,7 @@ const ProductActions = ({stock}: TProductActionsProps) => {
           </div>
         </div>
 
-        <Button className="flex-1 lg:px-14 flex items-center justify-center gap-2">
+        <Button className="flex-1 lg:px-14 flex items-center justify-center gap-2" onClick={handleAddToCart}>
           <FiShoppingBag size={20} />
           <span className="whitespace-nowrap">Add To Cart</span>
         </Button>

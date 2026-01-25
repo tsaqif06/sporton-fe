@@ -8,37 +8,6 @@ import { useRouter } from "next/navigation";
 import { getImageUrl } from "@/app/lib/api";
 import { useCartStore } from "@/app/hooks/use-cart-store";
 
-export const cartList = [
-  {
-    name: "SportsOn Product 1",
-    category: "Running",
-    price: 450000,
-    qty: 2,
-    imgUrl: "product-1.png",
-  },
-  {
-    name: "SportsOn Product 2",
-    category: "Running",
-    price: 250000,
-    qty: 3,
-    imgUrl: "product-1.png",
-  },
-  {
-    name: "SportsOn Product 3",
-    category: "Running",
-    price: 230000,
-    qty: 5,
-    imgUrl: "product-3.png",
-  },
-  {
-    name: "SportsOn Product 4",
-    category: "Running",
-    price: 30000,
-    qty: 2,
-    imgUrl: "product-3.png",
-  },
-];
-
 interface CartPopupProps {
   onClose?: () => void;
 }
@@ -48,8 +17,8 @@ const CartPopup = ({ onClose }: CartPopupProps) => {
   const { items, removeItem } = useCartStore();
 
   const totalPrice = items.reduce(
-    (total, item) => total + item.price * item.qty,
-    0,
+    (total, item) => total + Math.round(item.price) * item.qty,
+    0
   );
 
   const handleCheckout = () => {

@@ -42,7 +42,7 @@ const ProductDetail = async ({params}: TPageProps) => {
         </div>
 
         <div className="mt-auto">
-          <ProductActions stock={product.stock} />
+          <ProductActions product={product} stock={product.stock} />
         </div>
       </div>
     </main>
