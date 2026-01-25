@@ -4,33 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 
-// const categoryList = [
-//   {
-//     name: "Running",
-//     imgUrl: "category-running.png",
-//   },
-//   {
-//     name: "Tennis",
-//     imgUrl: "category-tennis.png",
-//   },
-//   {
-//     name: "Basketball",
-//     imgUrl: "category-basketball.png",
-//   },
-//   {
-//     name: "Football",
-//     imgUrl: "category-football.png",
-//   },
-//   {
-//     name: "Badminton",
-//     imgUrl: "category-badminton.png",
-//   },
-//   {
-//     name: "Swimming",
-//     imgUrl: "category-swimming.png",
-//   },
-// ];
-
 type TCategoriesProps = {
   categories: Category[];
 }

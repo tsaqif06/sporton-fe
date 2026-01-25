@@ -3,47 +3,14 @@ import Link from "next/link";
 import Button from "../ui/button";
 import { FiPlus } from "react-icons/fi";
 import priceFormatter from "@/app/utils/price-formatter";
+import { Product } from "@/app/types";
+import { getImageUrl } from "@/app/lib/api";
 
-const productList = [
-  {
-    name: "SportsOn Product 1",
-    category: "Running",
-    price: 450000,
-    imgUrl: "product-1.png",
-  },
-  {
-    name: "SportsOn Product 2",
-    category: "Running",
-    price: 250000,
-    imgUrl: "product-1.png",
-  },
-  {
-    name: "SportsOn Product 3",
-    category: "Running",
-    price: 230000,
-    imgUrl: "product-3.png",
-  },
-  {
-    name: "SportsOn Product 4",
-    category: "Running",
-    price: 440000,
-    imgUrl: "product-4.png",
-  },
-  {
-    name: "SportsOn Product 5",
-    category: "Running",
-    price: 550000,
-    imgUrl: "product-5.png",
-  },
-  {
-    name: "SportsOn Product 6",
-    category: "Running",
-    price: 650000,
-    imgUrl: "product-6.png",
-  },
-];
+type TProductsProps = {
+  products: Product[];
+}
 
-const ProductsSection = () => {
+const ProductsSection = ({products}: TProductsProps) => {
   return (
     <section
       id="products-section"
@@ -54,15 +21,15 @@ const ProductsSection = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
-        {productList.map((product, index) => (
+        {products.map((product) => (
           <Link
-            href={`/product/${product.name}`}
-            key={index}
+            href={`/product/${product._id}`}
+            key={product._id}
             className="p-1.5 bg-white hover:drop-shadow-xl duration-300 flex flex-col group"
           >
             <div className="bg-primary-light aspect-square w-full flex justify-center items-center relative overflow-hidden">
               <Image
-                src={`/images/products/${product.imgUrl}`}
+                src={getImageUrl(product.imageUrl)}
                 alt={product.name}
                 width={300}
                 height={300}
@@ -79,7 +46,7 @@ const ProductsSection = () => {
               </h3>
               <div className="flex flex-col sm:flex-row sm:justify-between mb-4 lg:mb-8 gap-1">
                 <div className="text-sm lg:text-base text-gray-500">
-                  {product.category}
+                  {product.category.name}
                 </div>
                 <div className="font-semibold text-primary">
                   {priceFormatter(product.price)}
