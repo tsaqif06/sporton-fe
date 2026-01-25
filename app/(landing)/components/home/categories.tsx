@@ -31,31 +31,37 @@ const categoryList = [
 
 const CategoriesSection = () => {
   return (
-    <section id="category-section" className="container mx-auto pb-20">
-      <div className="flex justify-between">
+    <section
+      id="category-section"
+      className="container mx-auto pb-20 px-4 lg:px-0"
+    >
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h2 className="font-bold text-2xl">Browse By Categories</h2>
-        <Link href="#" className="flex gap-2 text-primary font-medium">
-          <span className="self-center">See All Categories</span>
+        <Link
+          href="#"
+          className="flex gap-2 text-primary font-medium hover:underline"
+        >
+          <span>See All Categories</span>
           <FiArrowRight className="self-center" />
         </Link>
       </div>
-      <div className="grid grid-cols-6 gap-12 mt-8">
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-12 mt-8">
         {categoryList.map((category, index) => (
           <div
-            className="rounded-lg bg-gradient-to-r from-[#F1F1F1] to-[#F7F7F7] w-full aspect-square flex justify-center"
+            className="rounded-lg bg-gradient-to-r from-[#F1F1F1] to-[#F7F7F7] w-full aspect-square flex flex-col justify-center items-center p-4 transition-transform hover:scale-105 cursor-pointer"
             key={index}
           >
-            <div className="self-center">
+            <div className="relative w-16 h-16 md:w-20 md:h-20 mb-3">
               <Image
                 src={`/images/categories/${category.imgUrl}`}
-                width={86}
-                height="86"
+                fill
                 alt={category.name}
-                className="mb-2.5"
+                className="object-contain"
               />
-              <div className="text-primary font-medium text-xl text-center">
-                {category.name}
-              </div>
+            </div>
+            <div className="text-primary font-medium text-lg md:text-xl text-center">
+              {category.name}
             </div>
           </div>
         ))}
