@@ -25,19 +25,19 @@ const Header = () => {
 
         <nav className="hidden lg:flex gap-10 xl:gap-44 font-medium items-center">
           <Link
-            href="#"
+            href="/"
             className={`${pathname === "/" ? activeLineClass : ""}`}
           >
             Home
           </Link>
           <Link
-            href="#"
+            href="/category"
             className={`${pathname === "/category" ? activeLineClass : ""}`}
           >
             Category
           </Link>
           <Link
-            href="#"
+            href="/explore"
             className={`${pathname === "/explore" ? activeLineClass : ""}`}
           >
             Explore Products
