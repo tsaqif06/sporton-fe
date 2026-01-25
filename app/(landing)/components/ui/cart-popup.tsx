@@ -5,6 +5,8 @@ import Image from "next/image";
 import Button from "./button";
 import { FiArrowRight, FiTrash2 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import { getImageUrl } from "@/app/lib/api";
+import { useCartStore } from "@/app/hooks/use-cart-store";
 
 export const cartList = [
   {
@@ -43,8 +45,9 @@ interface CartPopupProps {
 
 const CartPopup = ({ onClose }: CartPopupProps) => {
   const { push } = useRouter();
+  const { items, removeItem } = useCartStore();
 
-  const totalPrice = cartList.reduce(
+  const totalPrice = items.reduce(
     (total, item) => total + item.price * item.qty,
     0,
   );
@@ -77,11 +80,11 @@ const CartPopup = ({ onClose }: CartPopupProps) => {
         </div>
 
         <div className="max-h-[50vh] lg:max-h-[400px] overflow-y-auto">
-          {cartList.map((item, index) => (
-            <div className="border-b border-gray-200 p-4 flex gap-3 hover:bg-gray-50 transition-colors" key={index}>
+          {items.length ? items.map((item) => (
+            <div className="border-b border-gray-200 p-4 flex gap-3 hover:bg-gray-50 transition-colors" key={item._id}>
               <div className="bg-primary-light aspect-square w-16 h-16 flex-shrink-0 flex justify-center items-center rounded">
                 <Image
-                  src={`/images/products/${item.imgUrl}`}
+                  src={getImageUrl(item.imageUrl)}
                   width={63}
                   height={63}
                   alt={item.name}
@@ -101,11 +104,19 @@ const CartPopup = ({ onClose }: CartPopupProps) => {
                 size="small"
                 variant="ghost"
                 className="w-8 h-8 p-0! self-center ml-auto flex-shrink-0 text-gray-400 hover:text-red-500"
+                onClick={(e) => {
+                  e.preventDefault();
+                  removeItem(item._id);
+                }}
               >
                 <FiTrash2 size={16} />
               </Button>
             </div>
-          ))}
+          )):
+          <div className="p-4 text-center text-gray-500">
+            Your cart is empty
+          </div>
+          }
         </div>
 
         <div className="border-t border-gray-200 p-4 bg-gray-50 lg:bg-white rounded-b-lg lg:rounded-none">

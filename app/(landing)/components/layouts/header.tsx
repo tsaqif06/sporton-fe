@@ -6,10 +6,15 @@ import { FiSearch, FiShoppingBag, FiMenu, FiX } from "react-icons/fi"; // Tambah
 import CartPopup from "../ui/cart-popup";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useCartStore } from "@/app/hooks/use-cart-store";
 
 const Header = () => {
   const [isCartPopupOpen, setIsCartPopupOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { items } = useCartStore();
+
+  const totalQty = items.reduce((acc, item) => acc + item.qty, 0);
 
   const pathname = usePathname();
   const activeLineClass = `
@@ -17,7 +22,7 @@ const Header = () => {
   `;
 
   return (
-    <header className="relative bg-white z-50">
+    <header className="sticky top-0 w-full bg-white z-50">
       <div className="flex justify-between gap-5 md:gap-10 container mx-auto py-7 items-center px-4 md:px-0">
         <Link href="/">
           <Image src="/images/logo.svg" alt="Logo" width={127} height={30} />
@@ -53,11 +58,15 @@ const Header = () => {
                 onClick={() => setIsCartPopupOpen(!isCartPopupOpen)}
               >
                 <FiShoppingBag size={24} />
-                <div className="bg-primary rounded-full w-3.5 h-3.5 absolute -top-1 -right-1 text-[10px] text-white text-center leading-tight">
-                  3
-                </div>
+                {items.length > 0 && (
+                  <div className="bg-primary rounded-full w-3.5 h-3.5 absolute -top-1 -right-1 text-[10px] text-white text-center leading-tight">
+                    {totalQty}
+                  </div>
+                )}
               </button>
-              {isCartPopupOpen && <CartPopup onClose={() => setIsCartPopupOpen(false)} />}
+              {isCartPopupOpen && (
+                <CartPopup onClose={() => setIsCartPopupOpen(false)} />
+              )}
             </div>
           </div>
 
