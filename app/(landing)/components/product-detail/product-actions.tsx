@@ -15,37 +15,41 @@ const ProductActions = () => {
   const [qty, setQty] = useState(1);
 
   return (
-    <div className="flex gap-5">
-      <div className="border border-gray-500 inline-flex w-fit min-w-20.5">
-        <div className="aspect-square text-xl font-medium border-r border-gray-500 flex justify-center items-center">
-          <span>{qty}</span>
+    <div className="flex flex-col lg:flex-row gap-4 lg:gap-5 w-full">
+      <div className="flex gap-4 lg:gap-5">
+        <div className="border border-gray-500 flex w-fit h-[50px] lg:h-auto">
+          <div className="w-12 lg:w-14 text-xl font-medium border-r border-gray-500 flex justify-center items-center">
+            <span>{qty}</span>
+          </div>
+          <div className="flex flex-col w-10">
+            <button
+              className="border-b border-gray-500 cursor-pointer flex-1 flex items-center justify-center hover:bg-gray-100"
+              onClick={() => setQty(qty + 1)}
+            >
+              <FiChevronUp />
+            </button>
+            <button
+              className="cursor-pointer flex-1 flex items-center justify-center hover:bg-gray-100"
+              onClick={() => setQty(qty > 1 ? qty - 1 : qty)}
+            >
+              <FiChevronDown />
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <button
-            className="border-b border-gray-500 cursor-pointer h-1/2 aspect-square flex items-center justify-center"
-            onClick={() => setQty(qty + 1)}
-          >
-            <FiChevronUp />
-          </button>
-          <button
-            className="cursor-pointer h-1/2 aspect-square flex items-center justify-center"
-            onClick={() => setQty(qty > 1 ? qty - 1 : qty)}
-          >
-            <FiChevronDown />
-          </button>
-        </div>
+
+        <Button className="flex-1 lg:px-14 flex items-center justify-center gap-2">
+          <FiShoppingBag size={20} />
+          <span className="whitespace-nowrap">Add To Cart</span>
+        </Button>
       </div>
-      <Button className="px-20 w-full">
-        <FiShoppingBag size={24} />
-        Add To Cart
-      </Button>
+
       <Button
         variant="dark"
-        className="px-20 w-full"
+        className="w-full lg:px-14 flex items-center justify-center gap-2"
         onClick={() => push("/checkout")}
       >
-        Checkout Now
-        <FiArrowRight size={24} />
+        <span className="whitespace-nowrap">Checkout Now</span>
+        <FiArrowRight size={20} />
       </Button>
     </div>
   );
