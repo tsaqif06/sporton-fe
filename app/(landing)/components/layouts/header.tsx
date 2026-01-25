@@ -57,7 +57,7 @@ const Header = () => {
                   3
                 </div>
               </button>
-              {isCartPopupOpen && <CartPopup />}
+              {isCartPopupOpen && <CartPopup onClose={() => setIsCartPopupOpen(false)} />}
             </div>
           </div>
 
