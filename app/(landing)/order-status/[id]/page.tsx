@@ -8,13 +8,17 @@ const OrderStatus = () => {
   const [isConfirmed, setIsConfirmed] = useState(false);
 
   return (
-    <main className="bg-gray-100 min-h-screen grid grid-rows-[auto_1fr]">
-      <div className="max-w-5xl mx-auto py-20">
-        <h1 className="text-5xl font-bold text-center mb-2">Order Status</h1>
-      </div>
+    <main className="bg-gray-100 min-h-screen flex flex-col px-4">
+      <div className="max-w-5xl mx-auto w-full py-12 lg:py-20 flex-grow flex flex-col">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-10 lg:mb-20">
+          Order Status
+        </h1>
 
-      <div className="mb-20">
-        {isConfirmed ? <OrderConfirmed /> : <OrderSubmitted />}
+        <div className="flex-grow flex items-start justify-center">
+          <div className="w-full">
+            {isConfirmed ? <OrderConfirmed /> : <OrderSubmitted />}
+          </div>
+        </div>
       </div>
     </main>
   );
