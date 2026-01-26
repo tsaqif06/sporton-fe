@@ -83,10 +83,10 @@ const ProductTable = () => {
                   {data.stock} units
                 </td>
                 <td className="px-6 py-7.5 flex items-center gap-3 text-gray-600 whitespace-nowrap">
-                  <button>
+                  <button className="cursor-pointer hover:text-blue-600 transition-colors">
                     <FiEdit2 size={20} />
                   </button>
-                  <button>
+                  <button className="cursor-pointer hover:text-red-600 transition-colors">
                     <FiTrash2 size={20} />
                   </button>
                 </td>
