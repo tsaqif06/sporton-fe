@@ -6,15 +6,13 @@ import { FiRefreshCw } from "react-icons/fi";
 
 const OrderConfirmed = () => {
   return (
-    // 1. Ganti w-160 jadi w-full dengan max-width agar tidak jebol di HP
-    // 2. Padding p-8 di mobile, p-16 di desktop
     <div className="bg-white w-full max-w-[640px] p-8 lg:p-16 flex flex-col justify-center items-center mx-auto rounded-xl shadow-sm">
       <Image
         src="/images/icon-order-confirmed.svg"
         width={117}
         height={117}
         alt="order confirmed"
-        className="mb-4 w-20 lg:w-[117px] h-auto" // Ukuran icon menyesuaikan
+        className="mb-4 w-20 lg:w-[117px] h-auto"
       />
       <h2 className="text-xl lg:text-2xl font-semibold mb-2">Order Confirmed!!</h2>
       <p className="text-center text-sm lg:text-base mb-8 text-gray-600">
