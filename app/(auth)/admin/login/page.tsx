@@ -8,14 +8,15 @@ const LoginPage = () => {
   const { push } = useRouter();
 
   return (
-    <main className="bg-[#F7F9FA] w-full min-h-screen flex justify-center items-center">
-      <div className="max-w-136 w-full bg-white rounded-xl border-t-4 border-primary py-12 px-[72px]">
+    <main className="bg-[#F7F9FA] w-full min-h-screen flex justify-center items-center p-5">
+      <div className="max-w-136 w-full bg-white rounded-xl border-t-4 border-primary py-10 px-8 sm:px-10 md:px-[72px] shadow-sm">
         <Image
           src="/images/logo-admin.svg"
           alt="logo admin"
           width={304}
           height={51}
-          className="mx-auto mb-4"
+          className="mx-auto mb-4 w-full max-w-[260px] md:max-w-[304px] h-auto"
+          priority
         />
         <p className="opacity-50 text-sm text-center mb-9">
           Enter your credentials to access the dashboard
