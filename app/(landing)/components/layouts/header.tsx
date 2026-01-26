@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { FiSearch, FiShoppingBag, FiMenu, FiX } from "react-icons/fi"; // Tambah FiMenu & FiX
 import CartPopup from "../ui/cart-popup";
 import { useState } from "react";
-import { usePathname } from "next/navigation";
 import { useCartStore } from "@/app/hooks/use-cart-store";
 
 const Header = () => {
@@ -17,6 +17,22 @@ const Header = () => {
   const totalQty = items.reduce((acc, item) => acc + item.qty, 0);
 
   const pathname = usePathname();
+
+  const menuItems = [
+    {
+      name: "Home",
+      link: "/",
+    },
+    {
+      name: "Category",
+      link: "/category",
+    },
+    {
+      name: "Explore Products",
+      link: "/explore",
+    },
+  ];
+
   const activeLineClass = `
     relative after:content-[''] after:block after:bg-primary after:rounded-full after:h-[3px] after:w-1/2 after:absolute after:left-1/2 after:-translate-x-1/2 after:translate-y-1
   `;
@@ -29,24 +45,22 @@ const Header = () => {
         </Link>
 
         <nav className="hidden lg:flex gap-10 xl:gap-44 font-medium items-center">
-          <Link
-            href="/"
-            className={`${pathname === "/" ? activeLineClass : ""}`}
-          >
-            Home
-          </Link>
-          <Link
-            href="/category"
-            className={`${pathname === "/category" ? activeLineClass : ""}`}
-          >
-            Category
-          </Link>
-          <Link
-            href="/explore"
-            className={`${pathname === "/explore" ? activeLineClass : ""}`}
-          >
-            Explore Products
-          </Link>
+          {menuItems.map((item, index) => {
+            const isActive = item.link === pathname;
+            return (
+              <Link
+                href={item.link}
+                key={index}
+                className={`${
+                  isActive
+                    ? activeLineClass
+                    : "hover:text-primary transition-colors"
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-5 md:gap-10">
@@ -103,29 +117,20 @@ const Header = () => {
   `}
       >
         <div className="py-6 px-4 flex flex-col gap-6">
-          {" "}
-          {/* Bungkus kontennya di sini */}
-          <Link
-            href="/"
-            className={pathname === "/" ? "text-primary font-bold" : ""}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            href="/category"
-            className={pathname === "/category" ? "text-primary font-bold" : ""}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Category
-          </Link>
-          <Link
-            href="/explore"
-            className={pathname === "/explore" ? "text-primary font-bold" : ""}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Explore Products
-          </Link>
+          {menuItems.map((item, index) => {
+            const isActive = item.link === pathname;
+            return (
+              <Link
+                href={item.link}
+                key={index}
+                className={`flex gap-3 items-center py-3 px-4.5 rounded-lg font-medium duration-300 ${
+                  isActive ? "bg-primary/15 text-primary" : "hover:bg-gray-100"
+                }`}
+              >
+                <span>{item.name}</span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </header>
