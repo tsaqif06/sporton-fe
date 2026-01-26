@@ -1,12 +1,34 @@
+"use client";
+
+import Button from "@/app/(landing)/components/ui/button";
+import { FiPlus } from "react-icons/fi";
+import ProductTable from "../../components/products/product-table";
+import ProductModal from "../../components/products/product-modal";
+import { useState } from "react";
+
 const ProductManagement = () => {
-    return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">Product Management</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* Product cards will go here */}
-            </div>
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-10">
+        <div>
+          <h1 className="font-bold text-2xl">Product Management</h1>
+          <p className="opacity-50">Manage your inventory, prices and stock.</p>
         </div>
-    )
-}
+        <Button className="rounded-lg" onClick={() => setIsOpen(true)}>
+          <FiPlus size={24} />
+          Add Product
+        </Button>
+      </div>
+      <ProductTable />
+      <ProductModal isOpen={isOpen} onClose={handleCloseModal} />
+    </div>
+  );
+};
 
 export default ProductManagement;
