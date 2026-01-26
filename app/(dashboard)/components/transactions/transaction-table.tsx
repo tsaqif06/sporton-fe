@@ -43,52 +43,71 @@ const TransactionTable = ({ onViewDetails }: TTransactionTableProps) => {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200">
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="border-b border-gray-200">
-            <th className="px-6 py-4 font-semibold">Date</th>
-            <th className="px-6 py-4 font-semibold">Customer</th>
-            <th className="px-6 py-4 font-semibold">Contact</th>
-            <th className="px-6 py-4 font-semibold">Total</th>
-            <th className="px-6 py-4 font-semibold">Status</th>
-            <th className="px-6 py-4 font-semibold">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactionData.map((data, index) => (
-            <tr
-              key={index}
-              className="border-b border-gray-200 last:border-b-0"
-            >
-              <td className="px-6 py-4 font-medium">{data.date}</td>
-              <td className="px-6 py-4 font-medium">{data.customer}</td>
-              <td className="px-6 py-4 font-medium">{data.contact}</td>
-              <td className="px-6 py-4 font-medium">
-                {priceFormatter(data.total)}
-              </td>
-
-              <td className="px-6 py-4 font-medium">
-                <div
-                  className={`px-4 py-1 rounded-full border text-center w-fit text-sm uppercase ${getStatusColor(
-                    data.status
-                  )}`}
-                >
-                  {data.status}
-                </div>
-              </td>
-              <td className="px-6 py-7.5 flex items-center gap-3 text-gray-600">
-                <button
-                  onClick={onViewDetails}
-                  className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 w-fit py-1 px-2 rounded-md"
-                >
-                  <FiEye size={18} />
-                  View Details
-                </button>
-              </td>
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-gray-200">
+              <th className="px-6 py-4 font-semibold whitespace-nowrap">
+                Date
+              </th>
+              <th className="px-6 py-4 font-semibold whitespace-nowrap">
+                Customer
+              </th>
+              <th className="px-6 py-4 font-semibold whitespace-nowrap">
+                Contact
+              </th>
+              <th className="px-6 py-4 font-semibold whitespace-nowrap">
+                Total
+              </th>
+              <th className="px-6 py-4 font-semibold whitespace-nowrap">
+                Status
+              </th>
+              <th className="px-6 py-4 font-semibold whitespace-nowrap">
+                Actions
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {transactionData.map((data, index) => (
+              <tr
+                key={index}
+                className="border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors"
+              >
+                <td className="px-6 py-4 font-medium whitespace-nowrap text-sm">
+                  {data.date}
+                </td>
+                <td className="px-6 py-4 font-medium whitespace-nowrap">
+                  {data.customer}
+                </td>
+                <td className="px-6 py-4 font-medium whitespace-nowrap">
+                  {data.contact}
+                </td>
+                <td className="px-6 py-4 font-medium whitespace-nowrap">
+                  {priceFormatter(data.total)}
+                </td>
+                <td className="px-6 py-4 font-medium">
+                  <div
+                    className={`px-4 py-1 rounded-full border text-center w-fit text-[10px] md:text-sm font-bold uppercase tracking-wider ${getStatusColor(
+                      data.status,
+                    )}`}
+                  >
+                    {data.status}
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <button
+                    onClick={onViewDetails}
+                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 transition-all w-fit py-2 px-3 rounded-md text-gray-700 font-semibold text-sm whitespace-nowrap"
+                  >
+                    <FiEye size={18} />
+                    View Details
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

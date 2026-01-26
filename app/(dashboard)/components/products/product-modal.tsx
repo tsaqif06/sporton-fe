@@ -14,70 +14,80 @@ const ProductModal = ({ isOpen, onClose }: TProductModalProps) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add New Product">
-      <div className="flex flex-col gap-4">
-        <div className="flex gap-7">
-          <div className="min-w-50">
-            <ImageUploadPreview
-              label="Product Image"
-              value={imagePreview}
-              onChange={(file) => {
-                setImageFile(file);
-                setImagePreview(URL.createObjectURL(file));
-              }}
-            />
-          </div>
-          <div className="flex flex-col gap-4 w-full">
-            <div className="input-group-admin">
-              <label htmlFor="productName">Product Name</label>
-              <input
-                type="text"
-                id="productName"
-                name="productName"
-                placeholder="e. g. Running Shoes"
+      <div className="max-h-[70vh] md:max-h-none overflow-y-auto pr-2 custom-scrollbar">
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-7">
+            <div className="w-full md:w-80">
+              <ImageUploadPreview
+                label="Product Image"
+                value={imagePreview}
+                onChange={(file) => {
+                  setImageFile(file);
+                  setImagePreview(URL.createObjectURL(file));
+                }}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+
+            <div className="flex flex-col gap-4 w-full">
               <div className="input-group-admin">
-                <label htmlFor="productPrice">Price (IDR)</label>
+                <label htmlFor="productName">Product Name</label>
                 <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  placeholder="e. g. 500000"
+                  type="text"
+                  id="productName"
+                  name="productName"
+                  placeholder="e. g. Running Shoes"
                 />
               </div>
-              <div className="input-group-admin">
-                <label htmlFor="stock">Stock</label>
-                <input
-                  type="number"
-                  id="stock"
-                  name="stock"
-                  placeholder="e. g. 100"
-                />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="input-group-admin">
+                  <label htmlFor="productPrice">Price (IDR)</label>
+                  <input
+                    type="number"
+                    id="price"
+                    name="price"
+                    placeholder="e. g. 500000"
+                  />
+                </div>
+                <div className="input-group-admin">
+                  <label htmlFor="stock">Stock</label>
+                  <input
+                    type="number"
+                    id="stock"
+                    name="stock"
+                    placeholder="e. g. 100"
+                  />
+                </div>
               </div>
-            </div>
-            <div className="input-group-admin">
-              <label htmlFor="category">Category</label>
-              <select name="category" id="category">
-                <option value="" disabled>
-                  Select Category
-                </option>
-                <option value="running">Running</option>
-                <option value="football">Football</option>
-              </select>
+
+              <div className="input-group-admin">
+                <label htmlFor="category">Category</label>
+                <select name="category" id="category" defaultValue="">
+                  <option value="" disabled>
+                    Select Category
+                  </option>
+                  <option value="running">Running</option>
+                  <option value="football">Football</option>
+                </select>
+              </div>
             </div>
           </div>
+
+          <div className="input-group-admin">
+            <label htmlFor="description">Description</label>
+            <textarea
+              name="description"
+              id="description"
+              rows={5}
+              className="w-full"
+              placeholder="Product Details..."
+            ></textarea>
+          </div>
+
+          <Button className="w-full md:w-auto md:ml-auto mt-3 rounded-lg">
+            Create Product
+          </Button>
         </div>
-        <div className="input-group-admin">
-          <label htmlFor="description">Description</label>
-          <textarea
-            name="description"
-            id="description"
-            rows={7}
-            placeholder="Product Details..."
-          ></textarea>
-        </div>
-        <Button className="ml-auto mt-3 rounded-lg">Create Product</Button>
       </div>
     </Modal>
   );

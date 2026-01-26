@@ -88,7 +88,6 @@ const Header = () => {
             className="lg:hidden relative w-8 h-8 flex items-center justify-center text-gray-800 focus:outline-none"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {/* Pakai div wrapper biar icon-nya beneran di tengah button */}
             <div className="relative w-full h-full flex items-center justify-center">
               <div
                 className={`absolute transition-all duration-300 transform ${isMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"}`}
