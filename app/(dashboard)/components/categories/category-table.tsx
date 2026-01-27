@@ -1,21 +1,15 @@
-import priceFormatter from "@/app/utils/price-formatter";
+import { getImageUrl } from "@/app/lib/api";
+import { Category } from "@/app/types";
 import Image from "next/image";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
-const categoryData = [
-  {
-    name: "Running",
-    imageUrl: "/images/categories/category-running.png",
-    description: "lorem ipsum ",
-  },
-  {
-    name: "Football",
-    imageUrl: "/images/categories/category-football.png",
-    description: "lorem ipsum ",
-  },
-];
+type TCategoryTableProps = {
+  categories: Category[];
+  onDelete?: (id: string) => void;
+  onEdit?: (category: Category) => void;
+};
 
-const CategoryTable = () => {
+const CategoryTable = ({categories, onDelete, onEdit}: TCategoryTableProps) => {
   return (
     <div className="bg-white rounded-xl border border-gray-200">
       <div className="overflow-x-auto">
@@ -34,16 +28,16 @@ const CategoryTable = () => {
             </tr>
           </thead>
           <tbody>
-            {categoryData.map((data, index) => (
+            {categories.map((data) => (
               <tr
-                key={index}
+                key={data._id}
                 className="border-b border-gray-200 last:border-b-0"
               >
                 <td className="px-6 py-4 font-medium">
                   <div className="flex gap-2 items-center">
                     <div className="aspect-square bg-gray-100 rounded-md w-13 h-13">
                       <Image
-                        src={data.imageUrl}
+                        src={getImageUrl(data.imageUrl)}
                         width={52}
                         height={52}
                         alt={data.name}
@@ -57,10 +51,16 @@ const CategoryTable = () => {
                   {data.description}
                 </td>
                 <td className="px-6 py-7.5 flex items-center gap-3 text-gray-600 whitespace-nowrap">
-                  <button className="cursor-pointer hover:text-blue-600 transition-colors">
+                  <button
+                    className="cursor-pointer hover:text-blue-600 transition-colors"
+                    onClick={() => onEdit?.(data)}
+                  >
                     <FiEdit2 size={20} />
                   </button>
-                  <button className="cursor-pointer hover:text-red-600 transition-colors">
+                  <button
+                    className="cursor-pointer hover:text-red-600 transition-colors"
+                    onClick={() => onDelete?.(data._id)}
+                  >
                     <FiTrash2 size={20} />
                   </button>
                 </td>

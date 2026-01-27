@@ -4,30 +4,6 @@ import priceFormatter from "@/app/utils/price-formatter";
 import Image from "next/image";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 
-const productData = [
-  {
-    name: "SportOn Product 1",
-    imageUrl: "/images/products/product-1.png",
-    category: "Running",
-    price: 289000,
-    stock: 3,
-  },
-  {
-    name: "SportOn Product 2",
-    imageUrl: "/images/products/product-2.png",
-    category: "Running",
-    price: 229000,
-    stock: 5,
-  },
-  {
-    name: "SportOn Product 3",
-    imageUrl: "/images/products/product-3.png",
-    category: "Running",
-    price: 350000,
-    stock: 10,
-  },
-];
-
 type TProductTableProps = {
   products: Product[];
   onDelete?: (id: string) => void;
