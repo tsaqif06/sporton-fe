@@ -1,34 +1,23 @@
+import { Bank } from "@/app/types";
 import { FiCreditCard, FiEdit2, FiTrash2 } from "react-icons/fi";
 
-const bankData = [
-  {
-    bankName: "BCA",
-    accountNumber: "123123",
-    accountName: "PT SportOn Digital Indonesia",
-  },
-  {
-    bankName: "Mandiri",
-    accountNumber: "1212312313123",
-    accountName: "PT SportOn Digital Indonesia",
-  },
-  {
-    bankName: "BRI",
-    accountNumber: "1123123123",
-    accountName: "PT SportOn Digital Indonesia",
-  },
-];
+type TBankTableProps = {
+  banks: Bank[];
+  onDelete?: (id: string) => void;
+  onEdit?: (bank: Bank) => void;
+};
 
-const BankInfoList = () => {
+const BankInfoList = ({ banks, onDelete, onEdit }: TBankTableProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-      {bankData.map((data, index) => (
+      {banks.map((data) => (
         <div
           className="bg-white rounded-lg border border-gray-200 flex flex-col justify-between"
-          key={index}
+          key={data._id}
         >
           <div className="flex justify-between p-5 items-start">
             <div className="flex gap-3 items-center">
-              <div className="bg-blue-50 text-blue-600 rounded-lg w-12 h-12 flex-shrink-0 flex justify-center items-center">
+              <div className="bg-blue-50 text-blue-600 rounded-lg w-12 h-12 shrink-0 flex justify-center items-center">
                 <FiCreditCard size={24} />
               </div>
               <div>
@@ -39,10 +28,16 @@ const BankInfoList = () => {
               </div>
             </div>
             <div className="flex gap-3 text-gray-500">
-              <button className="cursor-pointer hover:text-blue-600 transition-colors">
+              <button
+                className="cursor-pointer hover:text-blue-600 transition-colors"
+                onClick={() => onEdit?.(data)}
+              >
                 <FiEdit2 size={18} />
               </button>
-              <button className="cursor-pointer hover:text-red-600 transition-colors">
+              <button
+                className="cursor-pointer hover:text-red-600 transition-colors"
+                onClick={() => onDelete?.(data._id)}
+              >
                 <FiTrash2 size={18} />
               </button>
             </div>
