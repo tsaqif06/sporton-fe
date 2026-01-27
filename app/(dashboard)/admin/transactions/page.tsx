@@ -2,17 +2,60 @@
 
 import TransactionTable from "../../components/transactions/transaction-table";
 import TransactionModal from "../../components/transactions/transaction-modal";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Transaction } from "@/app/types";
+import {
+  getAllTransactions,
+  updateTransaction,
+} from "@/app/services/transaction.service";
+import { toast } from "react-toastify";
 
 const TransactionManagement = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
+
+  const fetchTransactions = useCallback(async () => {
+    try {
+      const data = await getAllTransactions();
+      if (data) setTransactions(data);
+    } catch (error) {
+      console.error("Failed to fetch products", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
 
   const handleCloseModal = () => {
-    setIsOpen(false);
+    setIsModalOpen(false);
   };
 
-  const handleViewDetails = () => {
-    setIsOpen(true);
+  const handleViewDetails = (transaction: Transaction) => {
+    setSelectedTransaction(transaction);
+    setIsModalOpen(true);
+  };
+
+  const handleStatusChange = async (
+    id: string,
+    status: "paid" | "rejected",
+  ) => {
+    try {
+      const formData = new FormData();
+      formData.append("status", status);
+
+      await updateTransaction(id, formData);
+
+      toast.success("Transaction status updated");
+      fetchTransactions();
+    } catch (error) {
+      console.error("Failed to update transaction status", error);
+      toast.error("Failed to update transaction status");
+    } finally {
+      setIsModalOpen(false);
+    }
   };
 
   return (
@@ -26,8 +69,16 @@ const TransactionManagement = () => {
         </div>
       </div>
 
-      <TransactionTable onViewDetails={handleViewDetails} />
-      <TransactionModal isOpen={isOpen} onClose={handleCloseModal} />
+      <TransactionTable
+        transactions={transactions}
+        onViewDetails={handleViewDetails}
+      />
+      <TransactionModal
+        transaction={selectedTransaction}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onStatusChange={handleStatusChange}
+      />
     </div>
   );
 };

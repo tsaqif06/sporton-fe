@@ -1,35 +1,17 @@
+import { Transaction } from "@/app/types";
 import priceFormatter from "@/app/utils/price-formatter";
-import { FiEdit2, FiEye, FiTrash2 } from "react-icons/fi";
-
-const transactionData = [
-  {
-    date: "23/02/2026 19:32",
-    customer: "John Doe",
-    contact: "+123123123 ",
-    total: 1500000,
-    status: "pending",
-  },
-  {
-    date: "23/02/2026 19:32",
-    customer: "John Doe 2",
-    contact: "+123123123 ",
-    total: 2500000,
-    status: "rejected",
-  },
-  {
-    date: "23/02/2026 19:32",
-    customer: "John Doe 3",
-    contact: "+123123123 ",
-    total: 1000000,
-    status: "paid",
-  },
-];
+import { useState } from "react";
+import { FiEye } from "react-icons/fi";
 
 type TTransactionTableProps = {
-  onViewDetails: () => void;
+  transactions: Transaction[];
+  onViewDetails: (transaction: Transaction) => void;
 };
 
-const TransactionTable = ({ onViewDetails }: TTransactionTableProps) => {
+const TransactionTable = ({
+  transactions,
+  onViewDetails,
+}: TTransactionTableProps) => {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "pending":
@@ -68,22 +50,28 @@ const TransactionTable = ({ onViewDetails }: TTransactionTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {transactionData.map((data, index) => (
+            {transactions.map((data) => (
               <tr
-                key={index}
+                key={data._id}
                 className="border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors"
               >
                 <td className="px-6 py-4 font-medium whitespace-nowrap text-sm">
-                  {data.date}
+                  {new Date(data.createdAt).toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </td>
                 <td className="px-6 py-4 font-medium whitespace-nowrap">
-                  {data.customer}
+                  {data.customerName}
                 </td>
                 <td className="px-6 py-4 font-medium whitespace-nowrap">
-                  {data.contact}
+                  {data.customerContact}
                 </td>
                 <td className="px-6 py-4 font-medium whitespace-nowrap">
-                  {priceFormatter(data.total)}
+                  {priceFormatter(parseInt(data.totalPayment))}
                 </td>
                 <td className="px-6 py-4 font-medium">
                   <div
@@ -96,7 +84,7 @@ const TransactionTable = ({ onViewDetails }: TTransactionTableProps) => {
                 </td>
                 <td className="px-6 py-4">
                   <button
-                    onClick={onViewDetails}
+                    onClick={() => onViewDetails(data)}
                     className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 transition-all w-fit py-2 px-3 rounded-md text-gray-700 font-semibold text-sm whitespace-nowrap"
                   >
                     <FiEye size={18} />

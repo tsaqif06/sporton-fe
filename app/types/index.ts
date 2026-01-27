@@ -4,12 +4,12 @@ export interface LoginCredentials {
 }
 
 export interface LoginResponse {
-  token: string,
+  token: string;
   user: {
     id: string;
     name: string;
     email: string;
-  }
+  };
 }
 
 export interface Category {
@@ -47,9 +47,9 @@ export interface Transaction {
   paymentProof: string;
   status: "pending" | "paid" | "rejected";
   purchasedItems: {
-    productId: string;
+    productId: Product;
     qty: number;
-  };
+  }[];
   totalPayment: string;
   customerName: string;
   customerContact: number | null;
