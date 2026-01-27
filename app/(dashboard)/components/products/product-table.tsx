@@ -1,3 +1,5 @@
+import { getImageUrl } from "@/app/lib/api";
+import { Product } from "@/app/types";
 import priceFormatter from "@/app/utils/price-formatter";
 import Image from "next/image";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
@@ -26,7 +28,13 @@ const productData = [
   },
 ];
 
-const ProductTable = () => {
+type TProductTableProps = {
+  products: Product[];
+  onDelete?: (id: string) => void;
+  onEdit?: (product: Product) => void;
+};
+
+const ProductTable = ({products, onDelete, onEdit}: TProductTableProps) => {
   return (
     <div className="bg-white rounded-xl border border-gray-200">
       <div className="overflow-x-auto">
@@ -51,16 +59,16 @@ const ProductTable = () => {
             </tr>
           </thead>
           <tbody>
-            {productData.map((data, index) => (
+            {products.map((data) => (
               <tr
-                key={index}
+                key={data._id}
                 className="border-b border-gray-200 last:border-b-0"
               >
                 <td className="px-6 py-4 font-medium whitespace-nowrap">
                   <div className="flex gap-3 items-center">
                     <div className="aspect-square bg-gray-100 rounded-md w-13 h-13">
                       <Image
-                        src={data.imageUrl}
+                        src={getImageUrl(data.imageUrl)}
                         width={52}
                         height={52}
                         alt={data.name}
@@ -73,7 +81,7 @@ const ProductTable = () => {
                 </td>
                 <td className="px-6 py-4 font-medium whitespace-nowrap">
                   <div className="rounded-md bg-gray-200 px-2 py-1 w-fit">
-                    {data.category}
+                    {data.category.name}
                   </div>
                 </td>
                 <td className="px-6 py-4 font-medium whitespace-nowrap">
@@ -83,10 +91,10 @@ const ProductTable = () => {
                   {data.stock} units
                 </td>
                 <td className="px-6 py-7.5 flex items-center gap-3 text-gray-600 whitespace-nowrap">
-                  <button className="cursor-pointer hover:text-blue-600 transition-colors">
+                  <button className="cursor-pointer hover:text-blue-600 transition-colors" onClick={() => onEdit?.(data)}>
                     <FiEdit2 size={20} />
                   </button>
-                  <button className="cursor-pointer hover:text-red-600 transition-colors">
+                  <button className="cursor-pointer hover:text-red-600 transition-colors" onClick={() => onDelete?.(data._id)}>
                     <FiTrash2 size={20} />
                   </button>
                 </td>
