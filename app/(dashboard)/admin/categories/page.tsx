@@ -89,7 +89,7 @@ const CategoryManagement = () => {
         </Button>
       </div>
       <CategoryTable
-        categories={categories}
+        categories={currentCategories}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />

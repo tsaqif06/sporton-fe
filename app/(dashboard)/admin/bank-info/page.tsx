@@ -9,6 +9,7 @@ import { Bank } from "@/app/types";
 import { deleteBank, getAllBanks } from "@/app/services/bank.service";
 import { toast } from "react-toastify";
 import DeleteModal from "../../components/ui/delete-modal";
+import Pagination from "../../components/ui/pagination";
 
 const BankInfoManagement = () => {
   const [banks, setBanks] = useState<Bank[]>([]);
@@ -61,7 +62,7 @@ const BankInfoManagement = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 6;
   const currentBanks = banks.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
@@ -85,7 +86,14 @@ const BankInfoManagement = () => {
           Add Bank Account
         </Button>
       </div>
-      <BankInfoList banks={banks} onEdit={handleEdit} onDelete={handleDelete} />
+      <BankInfoList banks={currentBanks} onEdit={handleEdit} onDelete={handleDelete} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(banks.length / itemsPerPage)}
+        onPageChange={(page) => setCurrentPage(page)}
+        totalItems={banks.length}
+        itemsPerPage={itemsPerPage}
+      />
       <BankInfoModal
         bank={selectedBank}
         isOpen={isModalOpen}

@@ -84,7 +84,7 @@ const ProductManagement = () => {
         </Button>
       </div>
       <ProductTable
-        products={products}
+        products={currentProducts}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
