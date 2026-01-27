@@ -9,6 +9,7 @@ import { Product } from "@/app/types";
 import { deleteProduct, getAllProducts } from "@/app/services/product.service";
 import { toast } from "react-toastify";
 import DeleteModal from "../../components/ui/delete-modal";
+import Pagination from "../../components/ui/pagination";
 
 const ProductManagement = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -60,6 +61,13 @@ const ProductManagement = () => {
     setSelectedProduct(null);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const currentProducts = products.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
@@ -79,6 +87,13 @@ const ProductManagement = () => {
         products={products}
         onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(products.length / itemsPerPage)}
+        onPageChange={(page) => setCurrentPage(page)}
+        totalItems={products.length}
+        itemsPerPage={itemsPerPage}
       />
       <ProductModal
         product={selectedProduct}

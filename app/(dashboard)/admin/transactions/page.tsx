@@ -9,6 +9,7 @@ import {
   updateTransaction,
 } from "@/app/services/transaction.service";
 import { toast } from "react-toastify";
+import Pagination from "../../components/ui/pagination";
 
 const TransactionManagement = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -58,6 +59,13 @@ const TransactionManagement = () => {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const currentTransactions = transactions.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
@@ -70,8 +78,15 @@ const TransactionManagement = () => {
       </div>
 
       <TransactionTable
-        transactions={transactions}
+        transactions={currentTransactions}
         onViewDetails={handleViewDetails}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(transactions.length / itemsPerPage)}
+        onPageChange={(page) => setCurrentPage(page)}
+        totalItems={transactions.length}
+        itemsPerPage={itemsPerPage}
       />
       <TransactionModal
         transaction={selectedTransaction}

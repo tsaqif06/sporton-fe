@@ -12,6 +12,7 @@ import {
 } from "@/app/services/category.service";
 import { Category } from "@/app/types";
 import DeleteModal from "../../components/ui/delete-modal";
+import Pagination from "../../components/ui/pagination";
 
 const CategoryManagement = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -65,6 +66,13 @@ const CategoryManagement = () => {
     setSelectedCategory(null);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const currentCategories = categories.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
   return (
     <div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
@@ -84,6 +92,13 @@ const CategoryManagement = () => {
         categories={categories}
         onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(categories.length / itemsPerPage)}
+        onPageChange={(page) => setCurrentPage(page)}
+        totalItems={categories.length}
+        itemsPerPage={itemsPerPage}
       />
       <CategoryModal
         category={selectedCategory}
