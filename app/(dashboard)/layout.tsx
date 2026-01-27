@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "../globals.css";
 import Sidebar from "./components/layouts/sidebar";
+import AuthGuard from "./components/layouts/auth-guard";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -25,7 +26,9 @@ export default function RootLayout({
         <div className="flex min-h-screen bg-white p-4 md:p-0">
           <Sidebar />
           <main className="flex-1 min-w-0 md:ml-80 bg-[#F7F9FA] min-h-screen pt-20 px-4 pb-4 md:p-14">
-            <div className="max-w-6xl mx-auto">{children}</div>
+            <div className="max-w-6xl mx-auto">
+              <AuthGuard>{children}</AuthGuard>
+            </div>
           </main>
         </div>
       </body>

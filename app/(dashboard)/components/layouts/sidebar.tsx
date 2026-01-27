@@ -1,8 +1,9 @@
 "use client";
 
+import { logout } from "@/app/services/auth.service";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   FiBox,
@@ -16,6 +17,8 @@ import {
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const { push } = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => setIsOpen(!isOpen);
@@ -42,6 +45,11 @@ const Sidebar = () => {
       link: "/admin/bank-info",
     },
   ];
+
+  const handleLogout = () => {
+    logout();
+    push("/admin/login");
+  }
 
   return (
     <>
@@ -107,13 +115,13 @@ const Sidebar = () => {
           })}
         </div>
 
-        <Link
-          href="#"
-          className="flex gap-3 font-medium py-3 px-4.5 mx-5 hover:bg-gray-100 duration-300 rounded-lg mt-auto mb-10"
+        <button
+          className="flex cursor-pointer gap-3 font-medium py-3 px-4.5 mx-5 hover:bg-gray-100 duration-300 rounded-lg mt-auto mb-10"
+          onClick={handleLogout}
         >
           <FiLogOut size={24} />
           Log Out
-        </Link>
+        </button>
       </aside>
     </>
   );
