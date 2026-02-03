@@ -5,8 +5,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "be-sporton.agunacourse.com",
-        pathname: "/uploads/**",
+        hostname: "res.cloudinary.com",
+        // hostname: "be-sporton.agunacourse.com",
+        pathname: "/**",
+        // pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "sporton-be.vercel.app",
+        pathname: "/**",
       },
     ],
   },

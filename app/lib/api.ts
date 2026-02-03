@@ -1,34 +1,41 @@
 export async function fetchAPI<T>(
-    endpoint: string,
-    options?: RequestInit
+  endpoint: string,
+  options?: RequestInit,
 ): Promise<T> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
-        ...options,
-        cache: options?.cache || "no-store", // data real time / updated
-    })
-    if (!res.ok) {
-        let errorMessage = `Failed to fetch ${endpoint}, status: ${res.status}`;
-        try {
-        const errorData = await res.json();
-            errorMessage = errorData.message || errorData.error || errorMessage;
-        } catch (e) {
-            console.log(e);
-        }
-
-        throw new Error(errorMessage);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
+    ...options,
+    cache: options?.cache || "no-store", // data real time / updated
+  });
+  if (!res.ok) {
+    if (res.status === 401 && typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/admin/login";
+      return Promise.reject("Unauthorized");
+    }
+    let errorMessage = `Failed to fetch ${endpoint}, status: ${res.status}`;
+    try {
+      const errorData = await res.json();
+      errorMessage = errorData.message || errorData.error || errorMessage;
+    } catch (e) {
+      console.log(e);
     }
 
-    return res.json();
+    throw new Error(errorMessage);
+  }
+
+  return res.json();
 }
 
 export function getImageUrl(path: string) {
-    if (path.startsWith("http")) return path;
-    return `${process.env.NEXT_PUBLIC_API_ROOT}/${path}`;
+  if (!path) return "/image/placeholder.svg";
+  if (path.startsWith("http")) return path;
+  return `${process.env.NEXT_PUBLIC_API_ROOT}/${path}`;
 }
 
 export function getAuthHeaders() {
-    const token = localStorage.getItem("token");
-    return {
-        Authorization: `Bearer ${token}`,
-    }
+  const token = localStorage.getItem("token");
+  return {
+    Authorization: `Bearer ${token}`,
+  };
 }
